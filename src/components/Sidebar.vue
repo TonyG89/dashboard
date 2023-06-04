@@ -10,10 +10,7 @@
             src="https://download-cs.net/steam/avatars/3428.jpg"
           ></v-img>
         </v-avatar>
-        <v-sheet
-          color="red lighten-1"
-          class="bg-white rounded text-1"
-        >
+        <v-sheet color="red lighten-1" class="bg-white rounded text-1">
           <h3>
             {{ user.email }}
           </h3>
@@ -24,12 +21,15 @@
     <v-divider></v-divider>
 
     <v-list>
-      <v-list-item v-for="[icon, text] in links" :key="icon" link>
+      <v-list-item v-for="link in links" :key="link.icon" link>
         <template v-slot:prepend>
-          <v-icon>{{ icon }}</v-icon>
+          <v-icon>{{ link.icon }}</v-icon>
         </template>
-
-        <v-list-item-title>{{ text }}</v-list-item-title>
+        <router-link :to="link.route">
+          <v-list-item-title class="text-red">{{
+            link.title
+          }}</v-list-item-title>
+        </router-link>
       </v-list-item>
     </v-list>
   </v-navigation-drawer>
@@ -57,4 +57,8 @@ const props = defineProps({
   },
 });
 defineEmits(['update:drawer']);
+
+const openMainPage = (e) => {
+  console.log(e.target);
+};
 </script>

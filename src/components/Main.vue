@@ -2,6 +2,9 @@
   <v-main>
     <v-container class="py-8 px-6" fluid>
       <v-row>
+        <v-col cols="12">
+          
+          </v-col>
         <v-col v-for="card in cards" :key="card" cols="12">
           <v-card>
             <v-list lines="two">
@@ -32,6 +35,7 @@
       </v-row>
     </v-container>
   </v-main>
+  
 </template>
 
 <script setup>
