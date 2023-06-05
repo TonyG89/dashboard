@@ -4,11 +4,11 @@
   <v-app id="inspire">
     <Header @handlerDrawer="drawer = !drawer" :user="user" />
     <Sidebar :drawer="drawer" :links="links" :user="user" />
-    <v-main class="w-100 bg-black dashboard">
-      <v-container class="py-8 px-6 w-100 bg-green" fluid>
+    <v-main class=" bg-black dashboard">
+      <v-container class="py-8 px-6 bg-green" fluid>
         <v-row class="bg-red">
           <v-col cols="12">
-            <v-sheet class="d-flex bg-surface-variant">
+            <v-sheet class="d-flex justify-center bg-surface-variant">
               <router-view />
             </v-sheet>
           </v-col>
@@ -72,5 +72,6 @@ const links = ref([
 }
 .v-main {
   min-width: 300px;
+  width: 1090px;
 }
 </style>

@@ -11,7 +11,7 @@ export default function useLogbook() {
     return new Promise((resolve, reject) => {
       fetch(url)
         .then(res => {
-          localStorage.setItem('logbookList', res);
+          localStorage.setItem('logbookList', JSON.stringify(res));
 
           return res.json()
         })
