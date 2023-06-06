@@ -1,8 +1,14 @@
 <template>
   <div class="d-flex flex-column w-100">
-    <h1>HIIII!!!</h1>
+    <InfoDashboard :entity="dashBoardInfo" />
+    <InfoDashboard :entity="dbSummary" />
+    <InfoDashboard :entity="entity" />
     <button @click="deselectRows">pushme</button>
+    <div v-if="isLoading">
+      <Loader />
+    </div>
     <ag-grid-vue
+      v-else
       class="ag-theme-alpine"
       style="min-width: 300px; height: 500px"
       :columnDefs="componentState.headerTitle"
@@ -22,6 +28,8 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { AgGridVue } from 'ag-grid-vue3'; // the AG Grid Vue Component
 import { computed, onMounted, reactive, ref } from 'vue';
+import Loader from '../components/Loader.vue';
+import InfoDashboard from '../components/InfoDashboard.vue';
 import useLogbook from '../composables/useLogbook';
 
 const gridApi = ref(null); // Optional - for accessing Grid's API
@@ -49,6 +57,39 @@ const columnDefs = ref([]);
 const headerArray = ref([]);
 // const logbook = ref({});
 
+const dataToDashboardInfo = (data, total = []) => {
+  data.value?.map((log) => ({
+    title: log.actions,
+    value: log.tags || '-',
+  }));
+};
+
+const dbSummary = computed(() => [
+  {
+    title: 'Всего заплатил за работу:',
+    value: logbookList.value?.reduce((acc, i) => acc + +i?.work, 0) || '-',
+  },
+  {
+    title: 'Всего заплатил за детали:',
+    value: logbookList.value?.reduce((acc, i) => acc + +i?.detail, 0) || '-',
+  },
+]);
+
+const entity = ref([
+  {
+    title: 'AverageKilometers',
+    value: 100 - 0,
+  }, //first, last
+  { title: 'AverageWork', value: 500 + 200 + 400 },
+
+  {
+    title: 'AverageKilometers: ',
+    value: 100 - -23 + 20,
+  }, //first, last
+
+  { title: 'AverageWork', value: 500 + 242 + 400 },
+]);
+
 const { logbookList, getLogbookList } = useLogbook();
 
 // DefaultColDef sets props common to all Columns
@@ -67,9 +108,11 @@ const defaultColDef = {
   flex: 1,
 };
 
+const isLoading = ref(true);
+
 const loadData = async () => {
   // TODO: проверка на наявность в локал стораже... и кнопка обновить базу.
-
+  isLoading.value = true;
   await getLogbookList();
 
   if (logbookList.value.length) {
@@ -87,26 +130,25 @@ const loadData = async () => {
     .filter((item) => item.field !== 'comments') // скрыть комментарии
     .map((item) => {
       console.log(item);
-      // В НАЧАЛЕ Мэпа....
+      // В НАЧАЛЕ Мэпа...
       if (item.field === 'details') {
         item.headerName = 'xxx';
-        item.children = [{
-          headerName: 'title.toUpperCase()',
-          field: 'sSSSSS'.toLowerCase(),
-        }];
+        item.children = [
+          {
+            headerName: 'title.toUpperCase()',
+            field: 'sSSSSS'.toLowerCase(),
+          },
+        ];
       }
       return {
         ...item,
       };
     });
+  isLoading.value = false;
 };
 // loadData();
 
 onMounted(async () => loadData());
 </script>
 
-<style>
-.vmain {
-  min-width: 1900px !important;
-}
-</style>
+<style></style>

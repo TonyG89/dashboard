@@ -5,7 +5,7 @@
     <Header @handlerDrawer="drawer = !drawer" :user="user" />
     <Sidebar :drawer="drawer" :links="links" :user="user" />
     <v-main class=" bg-black dashboard">
-      <v-container class="py-8 px-6 bg-green" fluid>
+      <v-container class="py-8 px-6 bg-green " fluid>
         <v-row class="bg-red">
           <v-col cols="12">
             <v-sheet class="d-flex justify-center bg-surface-variant">
@@ -22,15 +22,16 @@
 import Main from './components/Main.vue';
 import Header from './components/Header.vue';
 import Sidebar from './components/Sidebar.vue';
+import Loader from './components/Loader.vue';
 import { ref, reactive } from 'vue';
 
 const cards = ref(['Today', 'Yesterday']);
 const drawer = ref(false);
 const user = reactive({
-  login: 'Glazik',
-  email: 'glaznoe@gmail.com',
-  tel: '+38(093)152-03-52',
-  status: 'admin',
+  login: 'User',
+  email: 'email@gmail.com',
+  tel: '+38(093)***-**-52',
+  status: 'bigBoss',
 });
 
 const links = ref([
@@ -44,11 +45,11 @@ const links = ref([
     title: 'Dashboard',
     route: 'home',
   },
-  // {
-  //   icon: 'mdi-send',
-  //   title: 'Profile',
-  //   route: '',
-  // },
+  {
+    icon: 'mdi-send',
+    title: 'Новини сьогодні',
+    route: 'news',
+  },
   // {
   //   icon: 'mdi-delete',
   //   title: 'Product',
