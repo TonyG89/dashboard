@@ -26,7 +26,7 @@ import Loader from './components/Loader.vue';
 import { ref, reactive } from 'vue';
 
 const cards = ref(['Today', 'Yesterday']);
-const drawer = ref(false);
+const drawer = ref(true);
 const user = reactive({
   login: 'User',
   email: 'email@gmail.com',
